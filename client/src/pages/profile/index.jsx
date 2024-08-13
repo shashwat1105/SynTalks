@@ -13,19 +13,18 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Profile = () => {
-  const {userInfo}=useAppStore();
+  const navigate=useNavigate();
+  const {userInfo,setUserInfo}=useAppStore();
   const [firstName,setFirstName]=useState("");
   const [lastName,setLastName]=useState("");
   const [image,setImage]=useState(null);
   const [hovered,setHovered]=useState(false);
   const [selectedColor,setSelectCoolor]=useState(0);
-const navigate=useNavigate();
 const fileInputRef=useRef(null);
 
-const {setUserInfo}=useAppStore();
 
 useEffect(()=>{
-
+console.log("user info profile",userInfo.profileSetup)
   if(userInfo.profileSetup){
     setFirstName(userInfo.firstName);
     setLastName(userInfo.lastName);
@@ -50,13 +49,17 @@ const validateProfile=()=>{
 }
 
   const saveChanges=async()=>{
+    console.log(validateProfile());
 if(validateProfile()){
   try{
-
+console.log("before response");
     const response=await apiClient.post(UPDATE_PROFILE_ROUTE,
-      {firstName,lastName,color:selectedColor},
+      {firstName,
+        lastName,
+        color:selectedColor},
       {withCredentials:true}
     )
+    console.log("Response while save change",{response})
 
     if(response.status===200 && response.data){
       setUserInfo({...response.data});
@@ -64,13 +67,14 @@ if(validateProfile()){
       navigate("/chat");
     }
   }catch(err){
-    console.log(err);
+    console.log("while saving changes",err);
   }
 }
   }
 
 
   const handleNavigate=()=>{
+    console.log(userInfo.profileSetup); 
     if(userInfo.profileSetup){
       navigate("/chat");
     }else{
@@ -107,7 +111,7 @@ if(file){
 }
 
 }
-const handleDeleteImage=async(e)=>{
+const handleDeleteImage=async()=>{
 try{
   const response=await apiClient.delete(REMOVE_PROFILE_IMAGE_ROUTE,{
     withCredentials:true,

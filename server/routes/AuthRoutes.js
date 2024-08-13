@@ -9,7 +9,7 @@ const authRoutes=Router();
 authRoutes.post("/signup",signUp);
 authRoutes.post("/login",Login);
 authRoutes.get("/user-info",verifyToken,getUserInfo)
-authRoutes.get("/update-profile",verifyToken,updateProfile)
+authRoutes.post("/update-profile",verifyToken,updateProfile)
 authRoutes.post(
     "/add-profile-image",
     verifyToken,

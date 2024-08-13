@@ -52,7 +52,7 @@ export const Login= async(req,res,next)=>{
             
         }
 
-       const user=await User.findOne({email});
+       const user=await User.findOne({email:email});
 
        if(!user){
         return res.status(404).send("User with given email is not found");
@@ -117,13 +117,18 @@ export const updateProfile=async(req,res,next)=>{
     try{
         const {userId}=req;
         const {firstName,lastName,color}=req.body;
-         if(!firstName||!lastName){
-            return res.status(404).send(" FirstName,Lastname,color is required.")
+        
+        console.log("Request Body:", req.body); // Add this line to debug
+        console.log("User ID:", userId); 
+        
+        if(!firstName||!lastName){
+            return res.status(400).send(" FirstName,Lastname,color is required.")
          }
 
          const userData=await User.findByIdAndUpdate(userId,{
             firstName,lastName,color,profileSetup:true
          },{new:true,runValidators:true});
+         console.log("updated data: ",userData);
 
         return res.status(200).json({
             id:userData.id,
@@ -182,7 +187,7 @@ user.image=null;
 await user.save()
  
          
-        return res.status(200).msg( "Profile image remived succdessfully")
+        return res.status(200).send( "Profile image remived succdessfully")
             }catch(err){
                 console.log({err});
                 return res.status(500).send("internal Server Error!");
