@@ -117,9 +117,7 @@ export const updateProfile=async(req,res,next)=>{
     try{
         const {userId}=req;
         const {firstName,lastName,color}=req.body;
-        
-        console.log("Request Body:", req.body); // Add this line to debug
-        console.log("User ID:", userId); 
+    
         
         if(!firstName||!lastName){
             return res.status(400).send(" FirstName,Lastname,color is required.")
@@ -193,4 +191,19 @@ await user.save()
                 return res.status(500).send("internal Server Error!");
         
             }
+}
+
+
+export const logOut=async(req,res,next)=>{
+    try{
+
+        res.cookie("jwt",{maxAge:1,secure:true, 
+            sameSite:"None"
+        });
+        res.status(200).send("Logout Succesfully!");
+    }catch(err){
+        console.log(err);
+    }
+
+        
 }
