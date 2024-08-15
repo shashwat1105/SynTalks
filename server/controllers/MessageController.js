@@ -3,8 +3,8 @@ import User from "../models/UserModel.js";
 
 export const getMessages=async(req,res,next)=>{
     try{
-const user1=request.userId;
-const user2=request.body.id;
+const user1=req.userId;
+const user2=req.body.id;
 
         
            if(!user1 ||!user2){

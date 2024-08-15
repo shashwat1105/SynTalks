@@ -29,12 +29,14 @@ export const SocketProvider=({children})=>{
 
 const handleReceivemessage=(message)=>{
 
-    if(selectedChatType!==undefined && selectedChatData._id===message.sender._d || selectedChatData._id===message.recipient._id){
+    if(selectedChatType!==undefined && 
+        (selectedChatData._id===message.sender._id || selectedChatData._id===message.recipient._id))
+        {
         console.log("message received:",message);
         addMessage(message);
     }
 }
-socket.on("receiveMessage",handleReceivemessage);
+socket.current.on("receiveMessage",handleReceivemessage);
 
             return ()=>{
                 socket.current.disconnect();

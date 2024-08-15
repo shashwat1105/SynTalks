@@ -1,13 +1,46 @@
+import apiClient from "@/lib/api-client";
 import { useAppStore } from "@/store"
+import { GET_ALL_MESSAGES_ROUTE } from "@/utils/constants";
 import moment from "moment";
 import { useEffect, useRef } from "react";
-import { l } from "vite/dist/node/types.d-aGj9QkWt";
 
 
 const MessageContainer = () => {
-const {selectedChatType,selectedChatData,userInfo,selectedChatMessage}=useAppStore();
+const {selectedChatType,
+  selectedChatData,
+  setSelectedChatMessages, 
+  userInfo,
+  selectedChatMessage
+}=useAppStore();
 const scrollRef=useRef();
 
+
+useEffect(()=>{
+
+if(selectedChatData._id){
+
+  const getMessages=async()=>{
+   try{
+const response=await apiClient.post(GET_ALL_MESSAGES_ROUTE,{
+  id:selectedChatData._id
+},{withCredentials:true});
+
+if(response.data.messages){
+  setSelectedChatMessages(response);
+}
+
+
+
+   }catch(err){
+    console.log(err);
+   } 
+  }
+
+  if(selectedChatType==="contact") getMessages();
+
+}
+
+},[selectedChatData,selectedChatType])
 
 useEffect(()=>{
 
