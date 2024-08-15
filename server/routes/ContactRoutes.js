@@ -1,6 +1,6 @@
 import {Router} from "express";
-import { searchContacts } from "../controllers/ContactsController";
 import { verifyToken } from "../middlewares/AuthMiddleware.js";
+import { searchContacts } from "../controllers/ContactsController.js";
 
 
 const contactRoutes=Router();

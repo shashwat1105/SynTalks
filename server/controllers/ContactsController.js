@@ -1,4 +1,4 @@
-import User from "../models/UserModel";
+import User from "../models/UserModel.js";
 
 export const searchContacts=async(req,res,next)=>{
     try{
@@ -15,7 +15,7 @@ export const searchContacts=async(req,res,next)=>{
 
            const regex=new RegExp(sanitizedSearchTerm,"i");
 
-           const contacts=await User.findOne({
+           const contacts=await User.find({
             $and :[{_id:{$ne:req.userId}},
                  {
                     $or:[{firstName:regex},{lastName:regex},{
@@ -28,6 +28,7 @@ return res.status(200).json({contacts});
 
     }catch(err){
         console.log(err);
+        return res.status(500).send("INternal server error!");
     }
 
         

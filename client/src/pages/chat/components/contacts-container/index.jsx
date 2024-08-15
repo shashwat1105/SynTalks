@@ -3,7 +3,7 @@ import ProfileInfo from "./components/profile-info";
 
 const ContactsContainer = () => {
   return (
-    <div className="relative md:w-[35vw] lg:w-[30vw] bg-[#1b1c24] border-r-2 border-[#2f303b] w-full  xl:w-[20vw]">
+    <div className="relative md:w-[35vw] lg:w-[30vw] bg-[#1b1c24] border-r-2 border-[#2f303b] sm:w-full  xl:w-[20vw]">
        <div className="pt-3">
 
         <Logo/>
