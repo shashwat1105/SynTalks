@@ -3,8 +3,8 @@ import { HOST } from "@/utils/constants";
 import { createContext,useContext,useEffect, useRef } from "react"
 import { io } from "socket.io-client";
 
-const SocketContext=createContext(null);
 
+const SocketContext=createContext(null);
 
 export const useSocket=()=>{
     return useContext(SocketContext);
@@ -12,7 +12,7 @@ export const useSocket=()=>{
 
 export const SocketProvider=({children})=>{
     const socket=useRef();
-    const {userInfo,selectedChatData,addMessage,selectedChatType}=useAppStore();
+    const {userInfo }=useAppStore();
 
    useEffect(()=>{
     if(userInfo){
@@ -21,22 +21,28 @@ export const SocketProvider=({children})=>{
                 query:{userId:userInfo.id},
 
             });
-
+console.log("current socket is :",socket.current,{socket});
             socket.current.on("connect",()=>{
                 console.log("Connected to socket server.");
             })
 
 
-const handleReceivemessage=(message)=>{
-
+const handleRecievemessage=(message)=>{
+console.log("message received on client side:",message);
+    const {selectedChatData,selectedChatType,addMessage}=useAppStore.getState();
     if(selectedChatType!==undefined && 
-        (selectedChatData._id===message.sender._id || selectedChatData._id===message.recipient._id))
+        (selectedChatData._id===message.sender._id || 
+         selectedChatData._id===message.recipient._id))
         {
         console.log("message received:",message);
         addMessage(message);
+    }else{
+        console.log("error occured while receiving messages!");
     }
+
+
 }
-socket.current.on("receiveMessage",handleReceivemessage);
+socket.current.on("recieveMessage",handleRecievemessage);
 
             return ()=>{
                 socket.current.disconnect();

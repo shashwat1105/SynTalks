@@ -10,7 +10,7 @@ const {selectedChatType,
   selectedChatData,
   setSelectedChatMessages, 
   userInfo,
-  selectedChatMessage
+  selectedChatMessages
 }=useAppStore();
 const scrollRef=useRef();
 
@@ -25,11 +25,10 @@ const response=await apiClient.post(GET_ALL_MESSAGES_ROUTE,{
   id:selectedChatData._id
 },{withCredentials:true});
 
+console.log("message response",response);
 if(response.data.messages){
-  setSelectedChatMessages(response);
+  setSelectedChatMessages(response.data.messages);
 }
-
-
 
    }catch(err){
     console.log(err);
@@ -40,7 +39,7 @@ if(response.data.messages){
 
 }
 
-},[selectedChatData,selectedChatType])
+},[selectedChatData,selectedChatType,setSelectedChatMessages])
 
 useEffect(()=>{
 
@@ -48,11 +47,18 @@ if(scrollRef.current){
   scrollRef.current.scrollIntoView({behavior:"smooth"});
 }
 
-},[selectedChatMessage])
+},[selectedChatMessages])
+
+
+useEffect(()=>{
+console.log("messages selectedChatData",selectedChatData)
+console.log("messages selectedChatType",selectedChatType)
+console.log("messages selectedChatMessage",selectedChatMessages)
+},[])
   const renderMessages=()=>{
 
     let lastDate=null;
-     return selectedChatMessage.map((message,index)=>{
+     return selectedChatMessages && selectedChatMessages.map((message,index)=>{
       const  messageDate=moment(message.timestamp).format("YYYY-MM-DD");
       const showDate=messageDate!==lastDate;
       lastDate=messageDate;
