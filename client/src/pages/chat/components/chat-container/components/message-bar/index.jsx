@@ -53,11 +53,6 @@ const MessageBar = () => {
   const handleSendMessage = async () => {
     if (selectedChatType === "contact") {
 
-console.log("sender",userInfo.id);
-console.log("content",message);
-console.log("reciepent",selectedChatData._id);
-
-
       socket.emit("sendMessage", {
         sender: userInfo.id,
         content: message,
@@ -65,7 +60,18 @@ console.log("reciepent",selectedChatData._id);
         messageType: "text",
         fileUrl: undefined,
       });
+
+    }else if(selectedChatType==="channel"){
+socket.emit("send-channel-message",{
+  sender: userInfo.id,
+  content: message,
+  messageType: "text",
+  fileUrl: undefined,
+  channelId:selectedChatData._id
+})
     }
+
+    setMessage(""); 
   };
 
 
@@ -104,6 +110,14 @@ if(file){
         messageType: "file",
         fileUrl: response.data.filePath,
       });
+    }else if(selectedChatType==="channel"){
+      socket.emit("send-channel-message",{
+        sender: userInfo.id,
+        content: undefined,
+        messageType: "file",
+        fileUrl: response.data.filePath,
+        channelId:selectedChatData._id
+      })
     }
   }
 }

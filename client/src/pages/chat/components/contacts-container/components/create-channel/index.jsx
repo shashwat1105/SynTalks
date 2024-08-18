@@ -1,23 +1,18 @@
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import MultipleSelector from "@/components/ui/muitipleselect";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import apiClient from "@/lib/api-client";
-import { animationsDefaultOptions, getColor } from "@/lib/utils";
 import { useAppStore } from "@/store";
-import { GET_ALL_CONTACTS_ROUTE, HOST, SEARCH_CONTACT_ROUTES } from "@/utils/constants";
+import { CREATE_CHANNEL_ROUTE, GET_ALL_CONTACTS_ROUTE } from "@/utils/constants";
 import { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa"
-import Lottie from "react-lottie";
 
 const CreateChannel = () => {
 
-    const {setSelectedChatData,setSelectedChatType}=useAppStore();
+    const {setSelectedChatData,setSelectedChatType,  addChannel}=useAppStore();
     const [newChannelModal,setNewChannelModal]=useState(false);
-    const [searchedContacts,setSearchedContacts]=useState([]);
     const [allContacts,setAllContacts]=useState([]);
     const [selectedContacts,setSelectedContacts]=useState([]);
     const [channelName,setChannelName]=useState("")
@@ -36,6 +31,32 @@ const CreateChannel = () => {
     },[])
 
  const createChannel=async()=>{
+try{
+
+    if(channelName.length>0 && selectedContacts.length>0){
+
+        const response=await apiClient.post(CREATE_CHANNEL_ROUTE,
+            {
+            name:channelName,
+            members:selectedContacts.map((contact)=>contact.value)
+        },{
+            withCredentials:true
+        });
+console.log("response",response.status,response)
+        if(response.status===201){
+
+            setChannelName("");
+            setSelectedContacts([]);
+            setNewChannelModal(false);
+            addChannel(response.data.channel);
+
+        }
+
+    }
+
+}catch(err){
+    console.log(err);
+}
 
  }
 
@@ -66,16 +87,17 @@ onOpenChange={setNewChannelModal}>
       </DialogDescription>
     </DialogHeader>
     <div>
-        <Input placeholder="Channel Name"
+        <Input placeholder="Channel Name..."
         value={channelName}
-        onChange={e=>setChannelName(e.target.value)}
+        onChange={(e)=>setChannelName(e.target.value)}
         className="rounded-lg p-6 bg-[#2c2e3b] border-none"/>
     </div>
 <div className="">
     <MultipleSelector className="rounded-lg bg-[#2c2e3b] border-none py-2 text-white"
+    placeholder="Search Contacts"
     defaultOptions={allContacts}
     value={selectedContacts}
-    onChange={setSearchedContacts}
+    onChange={setSelectedContacts}
     emptyIndicator={
         <p className="text-center text-lg leading-10 text-gray-600 ">
             No result found

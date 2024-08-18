@@ -29,20 +29,32 @@ console.log("current socket is :",socket.current,{socket});
 
 const handleRecievemessage=(message)=>{
 console.log("message received on client side:",message);
-    const {selectedChatData,selectedChatType,addMessage}=useAppStore.getState();
+    const {selectedChatData,selectedChatType,addMessage,
+        addContactsInDMContacts
+    }=useAppStore.getState();
     if(selectedChatType!==undefined && 
         (selectedChatData._id===message.sender._id || 
          selectedChatData._id===message.recipient._id))
         {
         console.log("message received:",message);
         addMessage(message);
-    }else{
-        console.log("error occured while receiving messages!");
-    }
-
+    } 
+addContactsInDMContacts(message);
 
 }
+
+const handleRecieveChannelMessage=(message)=>{
+    const {selectedChatData,selectedChatType,addMessage,  addChannelInChannelList,}=useAppStore.getState();
+
+if(selectedChatType!==undefined && selectedChatData._id===message.channelId){
+    addMessage(message);
+}
+
+addChannelInChannelList(message);
+}
+
 socket.current.on("recieveMessage",handleRecievemessage);
+socket.current.on("recieve-channel-message",handleRecieveChannelMessage)
 
             return ()=>{
                 socket.current.disconnect();
