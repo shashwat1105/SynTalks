@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Message from "../models/MessagesModel.js";
 import User from "../models/UserModel.js";
 
@@ -42,7 +43,8 @@ export const getContactsForDMList=async(req,res,next)=>{
         userId=new mongoose.Types.ObjectId(userId);
 
         const contacts=await Message.aggregate([
-          {  $match:{
+          { 
+             $match:{
                 $or:[{sender:userId},{recipient:userId}],
             }
         },{
@@ -57,7 +59,7 @@ export const getContactsForDMList=async(req,res,next)=>{
                         else:"$sender",
                     }
                 },
-                lastMessageTime:{$first:$timestamp},
+                lastMessageTime:{$first:"$timestamp"},
             }
         },
         {
@@ -85,6 +87,32 @@ export const getContactsForDMList=async(req,res,next)=>{
         }
         ])
          
+return res.status(200).json({contacts});
+
+    }catch(err){
+        console.log(err);
+        return res.status(500).send("INternal server error!");
+    }
+
+        
+}
+
+
+export const getAllContacts=async(req,res,next)=>{
+    try{
+
+      const users=await User.find({_id:{$ne:req.userId}},
+        "firstName lastName _id"
+      );
+        
+      const contacts=users.map((user)=>(
+        {
+            label:user.firstName?`${user.firstName} ${user.lastName}`:
+            user.email
+        }
+      ))
+
+
 return res.status(200).json({contacts});
 
     }catch(err){
