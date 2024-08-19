@@ -16,12 +16,7 @@ const MessageBar = () => {
      selectedChatData, 
      userInfo, 
      selectedChatMessages,
-     isUploading,
-     isDownloading,
-     fileUploadprogress,
-     fileDownloadProgress,
-     setFileUploading,
-     setFileDownloadProgress,
+      
      setFileUploadProgress,
     setIsUploading} =useAppStore();
   const [message, setMessage] = useState("");
@@ -29,13 +24,7 @@ const MessageBar = () => {
   const [emojiPickerOpen, setEmojiPickerOpen] = useState(false);
 
   //just for debugging
-  useEffect(() => {
-    console.log("selectedChatType:", selectedChatType);
-    console.log("selectedChatData:", selectedChatData);
-    console.log("selectedChatMessage:", selectedChatMessages);
-    console.log("userInfo :", userInfo);
-  }, [userInfo, selectedChatData, selectedChatType, selectedChatMessages]);
-
+ 
   useEffect(() => {
     function handleClickOutside(event) {
       if (emojiRef.current && !emojiRef.current.contains(event.target)) {
@@ -62,12 +51,13 @@ const MessageBar = () => {
       });
 
     }else if(selectedChatType==="channel"){
+      
 socket.emit("send-channel-message",{
   sender: userInfo.id,
   content: message,
   messageType: "text",
   fileUrl: undefined,
-  channelId:selectedChatData._id
+  channelId:selectedChatData._id,
 })
     }
 
@@ -110,7 +100,8 @@ if(file){
         messageType: "file",
         fileUrl: response.data.filePath,
       });
-    }else if(selectedChatType==="channel"){
+    }
+    else if(selectedChatType==="channel"){
       socket.emit("send-channel-message",{
         sender: userInfo.id,
         content: undefined,

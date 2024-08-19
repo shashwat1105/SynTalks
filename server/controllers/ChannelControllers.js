@@ -52,7 +52,6 @@ return res.status(201).json({channels})
 
 export const getChannelMessages=async(req,res,next)=>{
     try{
-
 const {channelId}=req.params;
 const channel=await Channel.findById(channelId)
 .populate({path:"messages",
@@ -66,7 +65,6 @@ if(!channel){
     return response.status(404).send("Channel not found!")
 }
 const messages=channel.messages;
-
 return res.status(201).json({messages})
     }catch(err){
         console.log(err);

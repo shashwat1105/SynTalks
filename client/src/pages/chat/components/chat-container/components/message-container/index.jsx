@@ -50,7 +50,6 @@ const getChannelMessages=async()=>{
     const response=await apiClient.get(`${GET_CHANNEL_MESSAGES}/${selectedChatData._id}`,{
       withCredentials:true});
     
-    console.log("message response",response);
     if(response.data.messages){
       setSelectedChatMessages(response.data.messages);
     }
@@ -63,8 +62,10 @@ const getChannelMessages=async()=>{
 
  if(selectedChatData._id){
 if(selectedChatType==="contact") getMessages();
-    
-  }else if(selectedChatType==="channel") getChannelMessages();
+   
+else if(selectedChatType==="channel") {
+  getChannelMessages();}
+  }
 
 
 },[selectedChatData,selectedChatType,setSelectedChatMessages])

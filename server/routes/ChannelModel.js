@@ -43,5 +43,5 @@ channelSchema.pre("findOneAndUpdate",function(next){
     next();
 })
 
-const Channel=mongoose.model("Channels",channelSchema);
+const Channel=mongoose.model("Channel",channelSchema);
 export default Channel;

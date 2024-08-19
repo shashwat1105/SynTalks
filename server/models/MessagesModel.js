@@ -34,11 +34,11 @@ const messageSchema=new mongoose.Schema({
     },
     timeStamp:{
         type:Date,
-        default:Date.now,
+        default:Date.now(),
     }
 
 })
 
-const Message=mongoose.model("Messages",messageSchema);
+const Message=mongoose.model("Message",messageSchema);
 
 export default Message;
