@@ -77,7 +77,7 @@ console.log("response",response.status,response)
 
 <Dialog open={newChannelModal} 
 onOpenChange={setNewChannelModal}>
-<DialogTrigger>Open</DialogTrigger>
+<DialogTrigger></DialogTrigger>
   <DialogContent 
   className="bg-[#181920] border-none  gap-10 text-white w-[400px] h-[400px] flex flex-col">
  <DialogHeader>

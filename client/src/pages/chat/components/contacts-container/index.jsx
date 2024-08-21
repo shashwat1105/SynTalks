@@ -22,6 +22,7 @@ const {setDirectMessagesContacts,
       if(response.data.contacts){
         console.log("contacts",response.data.contacts)
         setDirectMessagesContacts(response.data.contacts);
+        console.log("directMessageContacts::::::",directMessagesContacts);
         
       }
     }
@@ -32,7 +33,6 @@ const {setDirectMessagesContacts,
       });
 
       if(response.data.channels){
-        console.log("contacts",response.data.channels)
         setChannels(response.data.channels);
         
       }
