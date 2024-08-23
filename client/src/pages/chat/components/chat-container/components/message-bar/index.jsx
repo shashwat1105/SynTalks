@@ -15,8 +15,6 @@ const MessageBar = () => {
   const { selectedChatType,
      selectedChatData, 
      userInfo, 
-     selectedChatMessages,
-      
      setFileUploadProgress,
     setIsUploading} =useAppStore();
   const [message, setMessage] = useState("");
