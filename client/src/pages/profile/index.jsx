@@ -164,7 +164,7 @@ try{
         )
       } 
 
-      <input type='file' ref={fileInputRef} className='hidden' onChange={handleImageChange} name="profile-image" accept='.png, .jpg, .jpeg, .svg, .webp'/>
+      <input type='file' ref={fileInputRef} className=''  style={{ display: 'none' }} onChange={handleImageChange} name="profile-image" accept='.png, .jpg, .jpeg, .svg, .webp'/>
     </div>
 
     <div className="flex min-w-32 md:min-w-64 flex-col gap-5 items-center justify-center text-white">
