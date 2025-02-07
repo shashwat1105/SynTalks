@@ -7,11 +7,11 @@ import contactRoutes from './routes/ContactRoutes.js';
 import setupSocket from './socket.js';
 import messagesRoutes from './routes/MessagesRoutes.js';
 import channelRoutes from './routes/ChannelRoutes.js';
-// import dotenv from "dotenv";
-
-// dotenv.config()
+import dotenv from "dotenv";
 
 const app=express();
+dotenv.config()
+
 const port=process.env.PORT||3001;
 const databaseURL=process.env.DATABASE_URL || "mongodb://127.0.0.1:27017/synchronous" ;
 
