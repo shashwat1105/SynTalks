@@ -17,7 +17,7 @@ const databaseURL=process.env.DATABASE_URL || "mongodb://127.0.0.1:27017/synchro
 
 app.use(cors(
     {
-    origin:["http://localhost:5173"],
+    origin:process.env.FRONTEND_URL || "http://localhost:5173",
     methods:["GET","POST","PUT","PATCH","DELETE"],
     credentials:true,
 }
