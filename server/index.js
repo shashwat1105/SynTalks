@@ -23,6 +23,9 @@ app.use(cors(
 }
 ));
 
+app.get("/",(req,res)=>{
+return res.send("Server is running!");
+})
 
 app.use("/uploads/profiles", express.static("uploads/profiles"));
 app.use("/uploads/files", express.static("uploads/files"));
