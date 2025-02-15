@@ -102,30 +102,30 @@ console.log({response});
         <div className="flex items-center justify-center w-full">
             <Tabs className='w-3/4 ' defaultValue='login'>
                 <TabsList className='bg-transparent rounded-none w-full'>
-                    <TabsTrigger value='login' className='data-[state=active]:bg-transparent text-[25px] text-black text-opacity-90 border-b-2 rounded-none w-full data-[state=active]:text-black data-[state=active]:font-semibold data-[state=active]:border-b-purple-500 transition-all duration-300'>Login</TabsTrigger>
+                    <TabsTrigger value='login' className='data-[state=active]:bg-transparent  text-black text-opacity-90 border-b-2 rounded-none w-full data-[state=active]:text-black data-[state=active]:font-semibold data-[state=active]:border-b-purple-500 transition-all duration-300'>Login</TabsTrigger>
                      
-                    <TabsTrigger value='signup' className='data-[state=active]:bg-transparent text-[25px] text-black text-opacity-90 border-b-2 rounded-none w-full data-[state=active]:text-black data-[state=active]:font-semibold data-[state=active]:border-b-purple-500 transition-all duration-300'>Signup</TabsTrigger>
+                    <TabsTrigger value='signup' className='data-[state=active]:bg-transparent  text-black text-opacity-90 border-b-2 rounded-none w-full data-[state=active]:text-black data-[state=active]:font-semibold data-[state=active]:border-b-purple-500 transition-all duration-300'>Signup</TabsTrigger>
                 </TabsList>
                 <TabsContent className='flex flex-col gap-5 mt-10' value='login'>
 
-                    <Input placeholder='Email' type="email" className="rounded-full text-[20px] p-8" value={email}
+                    <Input placeholder='Email' type="email" className="rounded-full p-6" value={email}
                     onChange={(e)=>setEmail(e.target.value)}/>
-                         <Input placeholder='Password' type="password" className="rounded-full text-[20px] p-8" value={password}
+                         <Input placeholder='Password' type="password" className="rounded-full p-6" value={password}
                     onChange={(e)=>setPassword(e.target.value)}/>
               
-                 <Button className='rounded-full p-8 text-[22px] ' onClick={handleLogin}>Login</Button>
+                 <Button className='rounded-full p-6 ' onClick={handleLogin}>Login</Button>
 
                 </TabsContent>
                 <TabsContent className='flex flex-col gap-5' value='signup'>
 
-                <Input placeholder='Email' type="email" className="rounded-full p-8 text-[20px]" value={email}
+                <Input placeholder='Email' type="email" className="rounded-full p-6" value={email}
                     onChange={(e)=>setEmail(e.target.value)}/>
-                         <Input placeholder='Password' type="password" className="rounded-full text-[20px] p-8" value={password}
+                         <Input placeholder='Password' type="password" className="rounded-full  p-6" value={password}
                     onChange={(e)=>setPassword(e.target.value)}/>
-                      <Input placeholder='Confirm Password' type="password" className="rounded-full text-[20px] p-8" value={confirmPassword}
+                      <Input placeholder='Confirm Password' type="password" className="rounded-full p-6" value={confirmPassword}
                     onChange={(e)=>setConfirmPassword(e.target.value)}/>
 
-<Button className='rounded-full p-8 text-[22px]' onClick={handleSignup}>Signup</Button>
+<Button className='rounded-full p-6' onClick={handleSignup}>Signup</Button>
 
                 </TabsContent>
             </Tabs>
